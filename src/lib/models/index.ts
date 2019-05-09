@@ -1,7 +1,31 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import mongoose from 'mongoose';
 import validator from 'validator';
+const validate = require('mongoose-validator');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const { Schema } = mongoose;
+
+const usernameValidator = [
+    validate({
+        validator: 'isLength',
+        arguments: [6, 50],
+        message: 'Username should be between {ARGS[0]} and {ARGS[1]} characters',
+    }),
+    validate({
+        validator: 'isAlphanumeric',
+        passIfEmpty: true,
+        message: 'Name should contain alpha-numeric characters only',
+    }),
+];
+
+const passValidator = [
+    validate({
+        validator: 'matches',
+        arguments: /^(?=.*\d)[0-9a-zA-Z]{8,}$/,
+        message: 'Password should be atleast 8 characters with atleat a letter and a number',
+    }),
+];
 
 const UserSchema = new Schema({
     firstName: {
@@ -10,6 +34,12 @@ const UserSchema = new Schema({
     },
     lastName: {
         type: String,
+    },
+    username: {
+        type: String,
+        unique: true,
+        required: 'Username is required',
+        validate: usernameValidator,
     },
     email: {
         type: String,
@@ -31,8 +61,19 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: 'Password is required',
+        validate: passValidator,
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
+    type: {
+        type: String,
+        default: 'client',
     },
 });
 
+// Plugin for Mongoose that turns duplicate errors into regular Mongoose validation errors.
+UserSchema.plugin(uniqueValidator, { message: '{PATH} of value {VALUE} is already taken, try another' });
+
 export default mongoose.model('Users', UserSchema);
-// module.exports = mongoose.model('Users', UserSchema);
