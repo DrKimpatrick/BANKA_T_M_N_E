@@ -6,10 +6,10 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "tsc",
-        "dev": "ts-node ./lib/server.ts",
-        "start": "nodemon ./dist/server.js",
+        "dev": "ts-node ./src/lib/server.ts",
+        "start": "nodemon ./src/dist/server.js",
         "prod": "npm run build && npm run start",
-        "lint": "node_modules/.bin/eslint --fix  lib/**/*.ts"
+        "lint": "node_modules/.bin/eslint --fix  src/lib/**/*.ts"
     },
     "husky": {
         "hooks": {
@@ -37,6 +37,7 @@
     "dependencies": {
         "@types/express": "^4.16.1",
         "@types/mongoose": "^5.5.0",
+        "@types/validator": "^10.11.0",
         "@typescript-eslint/eslint-plugin": "^1.7.0",
         "@typescript-eslint/parser": "^1.7.0",
         "eslint-config-prettier": "^4.2.0",
@@ -45,7 +46,8 @@
         "husky": "^2.2.0",
         "mongoose": "^5.5.6",
         "nodemon": "^1.19.0",
-        "prettier": "^1.17.0"
+        "prettier": "^1.17.0",
+        "validator": "^10.11.0"
     },
     "devDependencies": {
         "eslint": "^5.16.0",
