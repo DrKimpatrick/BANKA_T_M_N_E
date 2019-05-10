@@ -5,16 +5,9 @@ class Routes {
     public userController: Users = new Users();
 
     public routes = (app: Application) => {
-        app.route('/').get((req, res) => {
-            res.status(200).json({
-                status: 200,
-                data: {
-                    lastName: 'Kim',
-                    firstName: 'Pat',
-                    age: 20,
-                },
-            });
-        });
+        app.route('/users').get(this.userController.allUsers);
+        app.route('/auth/signup').post(this.userController.userSignup);
+        app.route('/auth/login').post(this.userController.login);
     };
 }
 
