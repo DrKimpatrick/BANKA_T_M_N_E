@@ -19,14 +19,6 @@ const usernameValidator = [
     }),
 ];
 
-const passValidator = [
-    validate({
-        validator: 'matches',
-        arguments: /^(?=.*\d)[0-9a-zA-Z]{8,}$/,
-        message: 'Password should be atleast 8 characters with atleat a letter and a number',
-    }),
-];
-
 const UserSchema = new Schema({
     firstName: {
         type: String,
@@ -61,7 +53,6 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: 'Password is required',
-        validate: passValidator,
     },
     isAdmin: {
         type: Boolean,
